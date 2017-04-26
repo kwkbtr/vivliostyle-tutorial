@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>EPUB Adaptive Layout 1</title>
+  <style>
+    @page {
+      size: JIS-B5;
+      width: 34rem;
+      height: 50rem;
+      margin: auto;
+      @bottom-center {
+        content: counter(page);
+      }
+    }
+    html {
+      font-family: Arial, "Yu Gothic", YuGothic, "メイリオ", Meiryo, sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      column-count: 2;
+      column-gap: 1.5rem;
+    }
+    body {
+      margin: 0;
+    }
+    h1, p {
+      margin-top: 1rem;
+      margin-bottom: 0;
+    }
+    h1 {
+      font-size: 1.5em;
+    }
+    .framed {
+      margin-top: 1rem;
+      border: blue solid 2px;
+    }
+
+    h1 {
+      break-after: avoid;
+    }
+    section:lang(en) {
+      break-after: column;
+    }
+    h1 {
+      break-inside: avoid;
+    }
+    html {
+      orphans: 1;
+      widows: 1;
+    }
+    .framed {
+      box-decoration-break: clone;
+    }
+    #toc > ul > li > a {
+      text-decoration: none;
+    }
+
+    section {
+      counter-increment: section;
+    }
+    section > h1::before {
+      content: counter(section) " ";
+    }
+    #toc > ul > li > a::before {
+      content: target-counter(attr(href), section) " ";
+    }
+    #toc > ul > li > a::after {
+      content: "P" target-counter(attr(href), page);
+      margin-left: 1em;
+    }
+
+    figure {
+      margin: 1em;
+    }
+    table {
+      border: 2px black solid;
+      border-collapse: collapse;
+      box-decoration-break: clone;
+    }
+    thead, tfoot {
+      background: lightgray;
+    }
+    th, td {
+      padding: 0.4em;
+      border: 1px lightgray solid;
+    }
+
+    figcaption {
+      repeat-on-break: header;
+    }
+    figure::nth-fragment(n+2) > figcaption > .figlabel::after {
+      content: "（続き）";
+    }
+    figure::nth-fragment(n)::after-if-continues {
+      content: "（続く）";
+      text-align: right;
+    }
+
+    h1 > .dup {
+      display: none;
+    }
+
+    @-epubx-page-template {
+
+      @-epubx-page-master {
+        @-epubx-partition {
+          -epubx-flow-from: body;
+          /*
+          width: 34rem;
+          margin: auto;
+          top: 5rem;
+          bottom: 5rem;
+          left: 0;
+          right: 0;
+          */
+          /*
+          column-count: 2;
+          column-gap: 1.5rem;
+          */
+        }
+        /*
+        @-epubx-partition {
+          width: 100%;
+          height: 2rem;
+          bottom: 1rem;
+          content: counter(page);
+          text-align: center;
+        }
+        */
+      }
+
+    }
+  </style>
+</head>
+<body>
+<nav id="toc">
+  <h1>目次<span class="dup">目次</span></h1>
+  <ul>
+    <li><a href="#sec1">見出し</a></li>
+    <li><a href="#sec2">Heading</a></li>
+    <li><a href="#sec3">見出し</a></li>
+    <li><a href="#sec4">Heading</a></li>
+    <li><a href="#sec5">見出し</a></li>
+    <li><a href="#sec6">Heading</a></li>
+    <li><a href="#sec7">見出し</a></li>
+    <li><a href="#sec8">Heading</a></li>
+    <li><a href="#sec9">見出し</a></li>
+    <li><a href="#sec10">かなりとても途方もなく長くて最低でも5行ぐらいになってしまってとてもやっかいで扱いにくい見出し</a></li>
+    <li><a href="#sec11">Heading</a></li>
+  </ul>
+</nav>
+<section id="sec1">
+  <h1>見出し<span class="dup">見出し</span></h1>
+  <p>
+    書くということは、私たちの文明の中で重要な位置を占めています。字を書き、伝え、記録する方法が進化するときには、人類の歴史も大きく前進しました。ハイパーテキストとWebは、すべての人が発言できることで、これまでにありえなかった形で人々をつなぎ、社会に大きな変化をもたらしています。
+  </p>
+  <p>
+    技術的な制約により、今日のWeb上のタイポグラフィと組版は、印刷媒体では普通だったことがうまく取り込めないままになっています。
+  </p>
+  <figure class="top">
+    <figcaption><span class="figlabel">表1</span>: これは長い表です</figcaption>
+    <table>
+      <thead>
+      <tr>
+        <th>ヘッダ1</th>
+        <th>ヘッダ2</th>
+        <th>ヘッダ3</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>ボディ1-1</td>
+        <td>ボディ1-2</td>
+        <td>ボディ1-3</td>
+      </tr>
+      <tr>
+        <td>ボディ2-1</td>
+        <td>ボディ2-2</td>
+        <td>ボディ2-3</td>
+      </tr>
+      <tr>
+        <td>ボディ3-1</td>
+        <td>ボディ3-2</td>
+        <td>ボディ3-3</td>
+      </tr>
+      <tr>
+        <td>ボディ4-1</td>
+        <td>ボディ4-2</td>
+        <td>ボディ4-3</td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td>フッタ1</td>
+        <td>フッタ2</td>
+        <td>フッタ3</td>
+      </tr>
+      </tfoot>
+    </table>
+  </figure>
+  <p>
+    Vivliostyle——ギリシャ語で「本」を表すvivlio（βιβλίο）とstyleから命名——は、この状況を変えるために誕生しました。私たちは、Webの基礎技術のひとつであるCSSを採用し、伝統的な組版をWeb技術で実現できるように拡張します。私たちは、これまでの最良の本と同様にWebが読みやすくなること、最良の本がWeb技術で作れるようになること、Webと印刷がひとつの世界になることを願っています。
+  </p>
+</section>
+
+<section lang="en" id="sec2">
+  <h1>Heading<span class="dup">Heading</span></h1>
+  <p>
+    Writing is at the heart of civilization. Every step forward in the history of writing has been a major step forward in the history of mankind. The latest one, hypertext and the web, working on any device, in every language, giving a voice to anyone, is bringing profound changes to society, connecting people like never before.
+  </p>
+  <p>
+    But along the way, something of value was lost. Due to technological limitations, typography and typesetting on the web today remain behind what was common place in printed media. Not merely decorative, many of these styling techniques had been developed over decades, even centuries, to improve the reading experience.
+  </p>
+  <figure class="top">
+    <figcaption><span class="figlabel">表2</span>: これも長い表です</figcaption>
+    <table>
+      <thead>
+      <tr>
+        <th>ヘッダ1</th>
+        <th>ヘッダ2</th>
+        <th>ヘッダ3</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>ボディ1-1</td>
+        <td>ボディ1-2</td>
+        <td>ボディ1-3</td>
+      </tr>
+      <tr>
+        <td>ボディ2-1</td>
+        <td>ボディ2-2</td>
+        <td>ボディ2-3</td>
+      </tr>
+      <tr>
+        <td>ボディ3-1</td>
+        <td>ボディ3-2</td>
+        <td>ボディ3-3</td>
+      </tr>
+      <tr>
+        <td>ボディ4-1</td>
+        <td>ボディ4-2</td>
+        <td>ボディ4-3</td>
+      </tr>
+      <tr>
+        <td>ボディ5-1</td>
+        <td>ボディ5-2</td>
+        <td>ボディ5-3</td>
+      </tr>
+      <tr>
+        <td>ボディ6-1</td>
+        <td>ボディ6-2</td>
+        <td>ボディ6-3</td>
+      </tr>
+      <tr>
+        <td>ボディ7-1</td>
+        <td>ボディ7-2</td>
+        <td>ボディ7-3</td>
+      </tr>
+      <tr>
+        <td>ボディ8-1</td>
+        <td>ボディ8-2</td>
+        <td>ボディ8-3</td>
+      </tr>
+      <tr>
+        <td>ボディ9-1</td>
+        <td>ボディ9-2</td>
+        <td>ボディ9-3</td>
+      </tr>
+      <tr>
+        <td>ボディ10-1</td>
+        <td>ボディ10-2</td>
+        <td>ボディ10-3</td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td>フッタ1</td>
+        <td>フッタ2</td>
+        <td>フッタ3</td>
+      </tr>
+      </tfoot>
+    </table>
+  </figure>
+  <p>
+    Vivliostyle —from βιβλίο (“book”, in Greek) and style— is here to address that. We take CSS, one of the cornerstones of the web, responsible for how it looks, and extend it to support this rich typography tradition. So that the web can be as nice to read as the nicest books. So the nicest books can be made with web technologies. So that web and print don't have to stay separate worlds.
+  </p>
+</section>
+
+<section id="sec3">
+  <h1>見出し</h1>
+  <p>
+    書くということは、私たちの文明の中で重要な位置を占めています。字を書き、伝え、記録する方法が進化するときには、人類の歴史も大きく前進しました。その最新のものであるハイパーテキストとWebは、あらゆる言語で、あらゆるデバイスで動き、すべての人が発言できることで、これまでにありえなかった形で人々をつなぎ、社会に大きな変化をもたらしています。
+  </p>
+  <p>
+    しかしその一方で、取り残されているものもあります。技術的な制約により、今日のWeb上のタイポグラフィと組版は、印刷媒体では普通だったことがうまく取り込めないままになっています。それらスタイリング技術は、単に装飾のためではなく、読書体験を向上させるために、何十年も何百年にもわたって開発されてきたものです。
+  </p>
+  <p>
+    Vivliostyle——ギリシャ語で「本」を表すvivlio（βιβλίο）とstyleから命名——は、この状況を変えるために誕生しました。私たちは、Webの基礎技術のひとつであるCSSを採用し、伝統的な組版をWeb技術で実現できるように拡張します。私たちは、これまでの最良の本と同様にWebが読みやすくなること、最良の本がWeb技術で作れるようになること、Webと印刷がひとつの世界になることを願っています。
+  </p>
+  <figure class="bottom">
+    <figcaption><span class="figlabel">表3</span>: 普通の表です</figcaption>
+    <table>
+      <thead>
+      <tr>
+        <th>ヘッダ1</th>
+        <th>ヘッダ2</th>
+        <th>ヘッダ3</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>ボディ1-1</td>
+        <td>ボディ1-2</td>
+        <td>ボディ1-3</td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td>フッタ1</td>
+        <td>フッタ2</td>
+        <td>フッタ3</td>
+      </tr>
+      </tfoot>
+    </table>
+  </figure>
+</section>
+
+<section lang="en" id="sec4">
+  <h1>Heading</h1>
+  <p>
+    Writing is at the heart of civilization. Every step forward in the history of writing has been a major step forward in the history of mankind. The latest one, hypertext and the web, working on any device, in every language, giving a voice to anyone, is bringing profound changes to society, connecting people like never before.
+  </p>
+  <figure class="span-auto top">
+    <figcaption><span class="figlabel">表4</span>: これは横に長い表です</figcaption>
+    <table>
+      <thead>
+      <tr>
+        <th>ヘッダ1</th>
+        <th>ヘッダ2</th>
+        <th>ヘッダ3</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>ボディ1-1 ThisIsAWideCell</td>
+        <td>ボディ1-2 ThisIsAWideCell</td>
+        <td>ボディ1-3 ThisIsAWideCell</td>
+      </tr>
+      <tr>
+        <td>ボディ2-1</td>
+        <td>ボディ2-2</td>
+        <td>ボディ2-3</td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td>フッタ1</td>
+        <td>フッタ2</td>
+        <td>フッタ3</td>
+      </tr>
+      </tfoot>
+    </table>
+  </figure>
+  <p>
+    But along the way, something of value was lost. Due to technological limitations, typography and typesetting on the web today remain behind what was common place in printed media. Not merely decorative, many of these styling techniques had been developed over decades, even centuries, to improve the reading experience.
+  </p>
+  <p>
+    Vivliostyle —from βιβλίο (“book”, in Greek) and style— is here to address that. We take CSS, one of the cornerstones of the web, responsible for how it looks, and extend it to support this rich typography tradition. So that the web can be as nice to read as the nicest books. So the nicest books can be made with web technologies. So that web and print don't have to stay separate worlds.
+  </p>
+</section>
+
+<section id="sec5">
+  <h1>見出し</h1>
+  <p>
+    書くということは、私たちの文明の中で重要な位置を占めています。字を書き、伝え、記録する方法が進化するときには、人類の歴史も大きく前進しました。その最新のものであるハイパーテキストとWebは、あらゆる言語で、あらゆるデバイスで動き、すべての人が発言できることで、これまでにありえなかった形で人々をつなぎ、社会に大きな変化をもたらしています。
+  </p>
+  <p>
+    しかしその一方で、取り残されているものもあります。技術的な制約により、今日のWeb上のタイポグラフィと組版は、印刷媒体では普通だったことがうまく取り込めないままになっています。それらスタイリング技術は、単に装飾のためではなく、読書体験を向上させるために、何十年も何百年にもわたって開発されてきたものです。
+  </p>
+  <p>
+    Vivliostyle——ギリシャ語で「本」を表すvivlio（βιβλίο）とstyleから命名——は、この状況を変えるために誕生しました。私たちは、Webの基礎技術のひとつであるCSSを採用し、伝統的な組版をWeb技術で実現できるように拡張します。私たちは、これまでの最良の本と同様にWebが読みやすくなること、最良の本がWeb技術で作れるようになること、Webと印刷がひとつの世界になることを願っています。
+  </p>
+</section>
+
+<section lang="en" id="sec6">
+  <h1>Heading</h1>
+  <p>
+    Writing is at the heart of civilization. Every step forward in the history of writing has been a major step forward in the history of mankind. The latest one, hypertext and the web, working on any device, in every language, giving a voice to anyone, is bringing profound changes to society, connecting people like never before.
+  </p>
+  <p>
+    But along the way, something of value was lost. Due to technological limitations, typography and typesetting on the web today remain behind what was common place in printed media. Not merely decorative, many of these styling techniques had been developed over decades, even centuries, to improve the reading experience.
+  </p>
+  <p>
+    Vivliostyle —from βιβλίο (“book”, in Greek) and style— is here to address that. We take CSS, one of the cornerstones of the web, responsible for how it looks, and extend it to support this rich typography tradition. So that the web can be as nice to read as the nicest books. So the nicest books can be made with web technologies. So that web and print don't have to stay separate worlds.
+  </p>
+</section>
+
+<section id="sec7">
+  <h1>見出し</h1>
+  <p>
+    書くということは、私たちの文明の中で重要な位置を占めています。字を書き、伝え、記録する方法が進化するときには、人類の歴史も大きく前進しました。その最新のものであるハイパーテキストとWebは、あらゆる言語で、あらゆるデバイスで動き、すべての人が発言できることで、これまでにありえなかった形で人々をつなぎ、社会に大きな変化をもたらしています。
+  </p>
+  <p>
+    しかしその一方で、取り残されているものもあります。技術的な制約により、今日のWeb上のタイポグラフィと組版は、印刷媒体では普通だったことがうまく取り込めないままになっています。それらスタイリング技術は、単に装飾のためではなく、読書体験を向上させるために、何十年も何百年にもわたって開発されてきたものです。
+  </p>
+  <p>
+    Vivliostyle——ギリシャ語で「本」を表すvivlio（βιβλίο）とstyleから命名——は、この状況を変えるために誕生しました。私たちは、Webの基礎技術のひとつであるCSSを採用し、伝統的な組版をWeb技術で実現できるように拡張します。私たちは、これまでの最良の本と同様にWebが読みやすくなること、最良の本がWeb技術で作れるようになること、Webと印刷がひとつの世界になることを願っています。
+  </p>
+</section>
+
+<section lang="en" id="sec8">
+  <h1>Heading</h1>
+  <p>
+    Writing is at the heart of civilization. Every step forward in the history of writing has been a major step forward in the history of mankind. The latest one, hypertext and the web, working on any device, in every language, giving a voice to anyone, is bringing profound changes to society, connecting people like never before.
+  </p>
+  <p>
+    But along the way, something of value was lost. Due to technological limitations, typography and typesetting on the web today remain behind what was common place in printed media. Not merely decorative, many of these styling techniques had been developed over decades, even centuries, to improve the reading experience.
+  </p>
+  <p>
+    Vivliostyle —from βιβλίο (“book”, in Greek) and style— is here to address that. We take CSS, one of the cornerstones of the web, responsible for how it looks, and extend it to support this rich typography tradition. So that the web can be as nice to read as the nicest books. So the nicest books can be made with web technologies. So that web and print don't have to stay separate worlds.
+  </p>
+</section>
+
+<section id="sec9">
+  <h1>見出し</h1>
+  <p>
+    書くということは、私たちの文明の中で重要な位置を占めています。字を書き、伝え、記録する方法が進化するときには、人類の歴史も大きく前進しました。その最新のものであるハイパーテキストとWebは、あらゆる言語で、あらゆるデバイスで動き、すべての人が発言できることで、これまでにありえなかった形で人々をつなぎ、社会に大きな変化をもたらしています。
+  </p>
+  <p>
+    しかしその一方で、取り残されているものもあります。技術的な制約により、今日のWeb上のタイポグラフィと組版は、印刷媒体では普通だったことがうまく取り込めないままになっています。それらスタイリング技術は、単に装飾のためではなく、読書体験を向上させるために、何十年も何百年にもわたって開発されてきたものです。
+  </p>
+</section>
+
+<section id="sec10">
+  <h1>かなりとても途方もなく長くて最低でも5行ぐらいになってしまってとてもやっかいで扱いにくい見出し</h1>
+  <p>
+    書くということは、私たちの文明の中で重要な位置を占めています。字を書き、伝え、記録する方法が進化するときには、人類の歴史も大きく前進しました。その最新のものであるハイパーテキストとWebは、あらゆる言語で、あらゆるデバイスで動き、すべての人が発言できることで、これまでにありえなかった形で人々をつなぎ、社会に大きな変化をもたらしています。
+  </p>
+  <p>
+    しかしその一方で、取り残されているものもあります。技術的な制約により、今日のWeb上のタイポグラフィと組版は、印刷媒体では普通だったことがうまく取り込めないままになっています。それらスタイリング技術は、単に装飾のためではなく、読書体験を向上させるために、何十年も何百年にもわたって開発されてきたものです。
+  </p>
+  <p>
+    Vivliostyle——ギリシャ語で「本」を表すvivlio（βιβλίο）とstyleから命名——は、この状況を変えるために誕生しました。私たちは、Webの基礎技術のひとつであるCSSを採用し、伝統的な組版をWeb技術で実現できるように拡張します。私たちは、これまでの最良の本と同様にWebが読みやすくなること、最良の本がWeb技術で作れるようになること、Webと印刷がひとつの世界になることを願っています。
+  </p>
+</section>
+
+<section lang="en" class="framed" id="sec11">
+  <h1>Heading</h1>
+  <p>
+    Writing is at the heart of civilization. Every step forward in the history of writing has been a major step forward in the history of mankind. The latest one, hypertext and the web, working on any device, in every language, giving a voice to anyone, is bringing profound changes to society, connecting people like never before.
+  </p>
+  <p>
+    But along the way, something of value was lost. Due to technological limitations, typography and typesetting on the web today remain behind what was common place in printed media. Not merely decorative, many of these styling techniques had been developed over decades, even centuries, to improve the reading experience.
+  </p>
+  <p>
+    Vivliostyle —from βιβλίο (“book”, in Greek) and style— is here to address that. We take CSS, one of the cornerstones of the web, responsible for how it looks, and extend it to support this rich typography tradition. So that the web can be as nice to read as the nicest books. So the nicest books can be made with web technologies. So that web and print don't have to stay separate worlds.
+  </p>
+</section>
+</body>
+</html>
